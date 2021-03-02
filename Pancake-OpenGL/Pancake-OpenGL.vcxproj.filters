@@ -20,11 +20,16 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="core.vs">
+    <None Include="Resources\Shaders\core.frag">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="core.frag">
+    <None Include="Resources\Shaders\core.vs">
       <Filter>Source Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Shader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
