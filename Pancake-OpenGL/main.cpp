@@ -4,10 +4,14 @@
 #include <GLM/glm.hpp>
 #include <GLM/gtc/matrix_transform.hpp>
 #include <GLM/gtc/type_ptr.hpp>
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h> 
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Camera.h"
+#include "Model.h"
 #include "Shader.h" 
 
 
@@ -55,7 +59,8 @@ int main()
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-			Shader shader("Resources/Shaders/core.vs", "Resources/Shaders/core.frag");
+			Shader shader("Resources/Shaders/modelLoading.vs", "Resources/Shaders/modelLoading.frag");
+            Model model("Resources/Models/PancakeScene.obj");
 
             GLfloat vertices[] = {
                 -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -138,7 +143,7 @@ int main()
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			SDL_Surface* image = IMG_Load("Resources/Images/pancakes.jpg");
+			SDL_Surface* image = IMG_Load("Resources/Models/Pancake_Low_pancake_BaseColor.png");
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->w, image->h, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
 			glGenerateMipmap(GL_TEXTURE_2D);
 			SDL_FreeSurface(image);
@@ -165,38 +170,22 @@ int main()
 
 				shader.Use();
 
-                glm::mat4 projection;
-                projection = glm::perspective(camera.GetZoom(), (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 1000.0f);
 
-                glm::mat4 model(1);
-                glm::mat4 view(1);
-                view = camera.GetViewMatrix();
 
-                GLint modelLocation = glGetUniformLocation(shader.Program, "model");
-                GLint viewLocation = glGetUniformLocation(shader.Program, "view");
-                GLint projectionLocation = glGetUniformLocation(shader.Program, "projection");
+                glm::mat4 view = camera.GetViewMatrix();
+                glUniformMatrix4fv(glGetUniformLocation(shader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+                glUniformMatrix4fv(glGetUniformLocation(shader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
-                glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
-                glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
+                // Draw the loaded model
+                glm::mat4 modelMat(1.0f);
+                modelMat = glm::translate(modelMat, glm::vec3(0.0f, -1.75f, 0.0f)); // Translate it down a bit so it's at the center of the scene
+                modelMat = glm::scale(modelMat, glm::vec3(0.2f, 0.2f, 0.2f));	// It's a bit too big for our scene, so scale it down
+                glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelMat));
+                model.Draw(shader);
 
-                glBindVertexArray(VAO);
-
-                for (GLuint i = 0; i < 10; i++)
-                {
-                    glm::mat4 model(1);
-                    model = glm::translate(model, cubePositions[i]);
-                    GLfloat angle = 20.0f * i;
-                    model = glm::rotate(model, angle, glm::vec3(1.0f, 0.3f, 0.5f));
-                    glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
-
-                    glDrawArrays(GL_TRIANGLES, 0, 36);
-                }
-
-                glBindVertexArray(0);
-
-				glfwSwapBuffers(window);
+                // Swap the buffers
+                glfwSwapBuffers(window);
 			}
-
 			glDeleteVertexArrays(1, &VAO);
 			glDeleteBuffers(1, &VBO);
 			glfwTerminate();

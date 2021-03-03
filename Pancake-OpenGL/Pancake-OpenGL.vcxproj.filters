@@ -29,12 +29,20 @@
     <None Include="Resources\Shaders\core.vs">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="Resources\Shaders\modelLoading.frag" />
+    <None Include="Resources\Shaders\modelLoading.vs" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

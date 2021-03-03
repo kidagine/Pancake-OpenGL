@@ -88,13 +88,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/../ExternalLibraries/GLM/include;$(SolutionDir)/../ExternalLibraries/GLFW/include;$(SolutionDir)/../ExternalLibraries/GLEW/include;$(SolutionDir)/../ExternalLibraries/SDL/SDL2_image-2.0.5/include;$(SolutionDir)/../ExternalLibraries/SDL/SDL2-2.0.14/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/../ExternalLibraries/ASSIMP/include;$(SolutionDir)/../ExternalLibraries/GLM/include;$(SolutionDir)/../ExternalLibraries/GLFW/include;$(SolutionDir)/../ExternalLibraries/GLEW/include;$(SolutionDir)/../ExternalLibraries/SDL/SDL2_image-2.0.5/include;$(SolutionDir)/../ExternalLibraries/SDL/SDL2-2.0.14/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)/../ExternalLibraries/SDL/SDL2_image-2.0.5/lib/x86;$(SolutionDir)/../ExternalLibraries/SDL/SDL2-2.0.14/lib/x86;$(SolutionDir)/../ExternalLibraries/GLEW/lib/Release/Win32;$(SolutionDir)/../ExternalLibraries/GLFW/lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)/../ExternalLibraries/ASSIMP/lib/x86;$(SolutionDir)/../ExternalLibraries/SDL/SDL2_image-2.0.5/lib/x86;$(SolutionDir)/../ExternalLibraries/SDL/SDL2-2.0.14/lib/x86;$(SolutionDir)/../ExternalLibraries/GLEW/lib/Release/Win32;$(SolutionDir)/../ExternalLibraries/GLFW/lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -105,15 +105,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/../ExternalLibraries/GLM/include;$(SolutionDir)/../ExternalLibraries/GLFW/include;$(SolutionDir)/../ExternalLibraries/GLEW/include;$(SolutionDir)/../ExternalLibraries/SDL/SDL2_image-2.0.5/include;$(SolutionDir)/../ExternalLibraries/SDL/SDL2-2.0.14/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/../ExternalLibraries/ASSIMP/include;$(SolutionDir)/../ExternalLibraries/GLM/include;$(SolutionDir)/../ExternalLibraries/GLFW/include;$(SolutionDir)/../ExternalLibraries/GLEW/include;$(SolutionDir)/../ExternalLibraries/SDL/SDL2_image-2.0.5/include;$(SolutionDir)/../ExternalLibraries/SDL/SDL2-2.0.14/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)/../ExternalLibraries/SDL/SDL2_image-2.0.5/lib/x86;$(SolutionDir)/../ExternalLibraries/SDL/SDL2-2.0.14/lib/x86;$(SolutionDir)/../ExternalLibraries/GLEW/lib/Release/Win32;$(SolutionDir)/../ExternalLibraries/GLFW/lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)/../ExternalLibraries/ASSIMP/lib/x86;$(SolutionDir)/../ExternalLibraries/SDL/SDL2_image-2.0.5/lib/x86;$(SolutionDir)/../ExternalLibraries/SDL/SDL2-2.0.14/lib/x86;$(SolutionDir)/../ExternalLibraries/GLEW/lib/Release/Win32;$(SolutionDir)/../ExternalLibraries/GLFW/lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -151,9 +151,13 @@
   <ItemGroup>
     <None Include="Resources\Shaders\core.frag" />
     <None Include="Resources\Shaders\core.vs" />
+    <None Include="Resources\Shaders\modelLoading.frag" />
+    <None Include="Resources\Shaders\modelLoading.vs" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="Shader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
